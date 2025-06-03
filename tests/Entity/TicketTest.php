@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Domain;
+namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
-use App\Domain\Ticket;
+use App\Entity\Ticket;
 
 class TicketTest extends TestCase
 {
@@ -11,6 +11,7 @@ class TicketTest extends TestCase
     {
         $ticket = new Ticket('Titre', 'Description', 'normale');
 
+        var_dump($ticket->getState());
         $this->assertSame('PENDING', $ticket->getState());
 
         $ticket->start();

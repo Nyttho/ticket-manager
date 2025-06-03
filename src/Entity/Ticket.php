@@ -40,6 +40,24 @@ class Ticket
     #[ORM\Column(length: 15)]
     private ?string $state = null;
 
+    public function __construct(string $title, string $description, string $priority)
+    {
+        $this->title = $title;
+        $this->description = $description;
+        $this->priority = $priority;
+        $this->state = 'PENDING';
+        $this->created_at = new \DateTimeImmutable(); // si nécessaire
+    }
+    public function start(): void
+    {
+        if ($this->state === 'PENDING') {
+            $this->state = 'IN_PROGRESS';
+            $this->first_assigned_at = new \DateTimeImmutable();
+            $this->last_assigned_at = new \DateTimeImmutable();
+        }
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
