@@ -1,14 +1,30 @@
 version: '3.8'
 
 services:
-  db:
+  database:
     image: postgres:15-alpine
     environment:
       POSTGRES_USER: symfony
       POSTGRES_PASSWORD: symfony_password
       POSTGRES_DB: symfony
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "symfony", "-U", "symfony"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+volumes:
+  pgdata:
