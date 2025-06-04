@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: TicketRepository::class)]
+#[ApiResource]
 class Ticket
 {
     #[ORM\Id]
